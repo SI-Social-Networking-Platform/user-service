@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using UserService.Model;
 
-[Route("api/[controller]")]
+[Route("user-service/auth")]
 [ApiController]
 public class AuthController : ControllerBase
 {
