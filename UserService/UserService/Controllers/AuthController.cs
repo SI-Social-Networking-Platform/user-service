@@ -41,10 +41,15 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("register")]
-    public async Task<ActionResult<string>> Register(string username, string password)
+    public async Task<ActionResult> Register([FromBody] RegisterRequest request)
     {
-        User userToCreate = new User { Username = username, Email = username };
-        var createdUser = await _authService.Register(userToCreate, password);
+        var userToCreate = new User
+        {
+            Username = request.Username,
+            Email = request.Email
+        };
+
+        var createdUser = await _authService.Register(userToCreate, request.Password);
 
         if (createdUser == null)
         {
@@ -52,19 +57,28 @@ public class AuthController : ControllerBase
         }
 
         var token = GenerateJwtToken(createdUser);
-        return StatusCode(201, token);
+
+        return StatusCode(201, new
+        {
+            Token = token,
+        });
     }
 
     [HttpPost("login")]
-    public async Task<ActionResult<string>> Login(string username, string password)
+    public async Task<ActionResult> Login([FromBody] LoginRequest request)
     {
-        var user = await _authService.Login(username, password);
+        var user = await _authService.Login(request.Username, request.Password);
+
         if (user == null)
         {
             return Unauthorized("Invalid username or password.");
         }
 
         var token = GenerateJwtToken(user);
-        return Ok(token);
+
+        return Ok(new
+        {
+            Token = token,
+        });
     }
 }
