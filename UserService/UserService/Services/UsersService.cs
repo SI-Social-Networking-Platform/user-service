@@ -70,3 +70,14 @@ public class UsersService
             .ToListAsync();
     }
 }
+
+public interface IUsersService
+{
+    Task<User> CreateUserAsync(User user);
+    Task<User> GetUserByIdAsync(int id);
+    Task<IEnumerable<User>> SearchUsersAsync(string name);
+    Task<bool> FollowUserAsync(int followerId, int followedId);
+    Task<List<int>> GetFollowedUserIdsAsync(int followerId);
+}
+
+

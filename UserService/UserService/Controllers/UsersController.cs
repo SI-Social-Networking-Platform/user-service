@@ -9,9 +9,9 @@ using UserService.Model;
 [ApiController]
 public class UsersController : ControllerBase
 {
-    private readonly UsersService _userService;
+    private readonly IUsersService _userService;
 
-    public UsersController(UsersService userService)
+    public UsersController(IUsersService userService)
     {
         _userService = userService;
     }
@@ -78,3 +78,4 @@ public class UsersController : ControllerBase
         return Ok(userDtos);
     }
 }
+

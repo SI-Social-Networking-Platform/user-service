@@ -1,3 +1,5 @@
+using UserService.Model;
+
 namespace UserService.Model
 {
     public class User
